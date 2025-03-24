@@ -30,10 +30,6 @@ public:
 
         }
 
-        if(E < days){
-            res += days - E;
-        }
-
-        return res;
+        return res + days - E;
     }
 };
