@@ -14,9 +14,10 @@ public:
             int currE = M[i][1]; 
 
             if(currS <= E + 1){
-                if(currE > E){
-                    E = currE;
-                }
+                E = max(E, currE);
+                // if(currE > E){
+                //     E = currE;
+                // }
             } else {
                 res += currS - E - 1 ;
                 E = currE;
