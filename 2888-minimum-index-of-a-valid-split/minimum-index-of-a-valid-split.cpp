@@ -1,30 +1,23 @@
 class Solution {
 public:
     int minimumIndex(vector<int>& nums) {
-        int curr = 0;
-        int majority;
-        for(int i = 0; i < nums.size(); i++){
-            if(curr == 0) majority = nums[i];
-            
-            if(nums[i] == majority) curr++;
-            else{
-                curr--;
-            }
+        int curr = 0, majority = -1;
+
+        // Step 1: Find the majority element using Boyer-Moore Voting Algorithm
+        for (int num : nums) {
+            if (curr == 0) majority = num;
+            curr += (num == majority) ? 1 : -1;
         }
 
-        int totalFreq = 0;
-        for(int i = 0; i < nums.size(); i++){
-            if(nums[i] == majority){
-                totalFreq++;
-            }
-        }
-
+        // Step 2: Count occurrences of the majority element
+        int totalFreq = count(nums.begin(), nums.end(), majority);
         int freq1 = 0;
 
-        for(int i = 0; i < nums.size(); i++){
-            if(nums[i] == majority) freq1++;
+        // Step 3: Find the valid split index
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] == majority) freq1++;
 
-            if( (2 * freq1 > i + 1) && (2 * (totalFreq - freq1) > nums.size() - 1 - i) ){
+            if (2 * freq1 > i + 1 && 2 * (totalFreq - freq1) > nums.size() - 1 - i) {
                 return i;
             }
         }
